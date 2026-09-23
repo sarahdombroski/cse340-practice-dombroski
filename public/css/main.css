@@ -1,30 +1,60 @@
 html, body {
     background-color: lightblue;
-    font-family: Arial, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 20px;
 }
 
-body {
-    nav {
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-        li {
-            display: inline;
-            margin-right: 15px;
-        }
+nav li {
+    display: inline;
+    margin-right: 15px;
+}
 
-        a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
 
-            &:hover {
-                color: #0066cc;
-            }
-        }
+nav a:hover {
+    color: #0066cc;
+}
+
+main h1 {
+    text-align: center;
+}
+
+img {
+    max-width: 75vw;
+    max-height: 75vh;
+    border-radius: 50px;
+}
+
+#personalImage {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (min-width: 750px) {
+    #imageAndInfo {
+        display: flex;
+        border: solid black 3px;
+        border-radius: 50px;
+        padding: 10px;
+        justify-content: space-around;
+    }
+    #personalParagraph {
+        margin-bottom: 25px;
+    }
+    #personalInformation {
+        font-size: large;
+        display: flex;
+        flex-direction: column;
+        max-width: 45vw;
     }
 }
