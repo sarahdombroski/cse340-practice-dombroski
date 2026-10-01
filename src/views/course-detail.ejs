@@ -4,6 +4,15 @@
         <h1><%= course.title %></h1>
         <p class="course-meta"><%= course.id %> • <%= course.credits %> credits</p>
         <p class="course-description"><%= course.description %></p>
+        <% if (Object.keys(queryParams).length > 0) { %>
+          <div class="sort-message">
+            <p>The classes are sorted by <%= queryParams.sort %>.</p>
+          </div>
+        <% } else { %>
+          <div class="sort-message">
+            <p>The classes are not sorted.</p>
+          </div>
+        <% }%>
     </div>
 
     <div class="sections">
