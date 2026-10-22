@@ -51,7 +51,7 @@ const processRegistration = async (req, res) => {
 
     if (!errors.isEmpty()) {
         console.error('Validation errors:', errors.array());
-        return res.redirect('/register');
+        res.redirect('/register');
         return;
     }
 
@@ -69,7 +69,7 @@ const processRegistration = async (req, res) => {
         }
 
         // Hash the password before saving to database
-        const hashedPassword = bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Save user to database with hashed password
         await saveUser(name, email, hashedPassword);
