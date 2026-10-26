@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="course-header">
+        <h1><%= course.name %></h1>
+        <p class="course-meta"><%= course.courseCode %> • <%= course.creditHours %> credits</p>
+        <p class="course-description"><%= course.description %></p>
+        <% if (Object.keys(queryParams).length > 0) { %>
+          <div class="sort-message">
+            <p>The classes are sorted by <%= queryParams.sort %>.</p>
+          </div>
+        <% } else { %>
+          <div class="sort-message">
+            <p>The classes are not sorted.</p>
+          </div>
+        <% }%>
+    </div>
+
+    <div class="sections">
+        <div class="sections-header">
+            <h2>Available Sections</h2>
+            <div class="sort-options">
+                <span>Sort by: </span>
+                <a href="/catalog/<%= course.slug %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
+                <a href="/catalog/<%= course.slug %>?sort=professor" class="<%= currentSort === 'professor' ? 'active' : '' %>">Professor</a>
+                <a href="/catalog/<%= course.slug %>?sort=room" class="<%= currentSort === 'room' ? 'active' : '' %>">Room</a>
+            </div>
+        </div>
+
+        <div class="section-list">
+            <% if (Object.keys(sections).length > 0) { %>
+                <% sections.forEach(section => { %>
+                    <div class="section-card">
+                        <div class="section-time"><%= section.time %></div>
+                        <div class="section-room">Room: <%= section.room %></div>
+                        <div class="section-professor">Instructor: <%= section.professor %></div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>There are no sections avaliable for this course.</p>
+            <% }%>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <p><a href="/catalog">&larr; Back to Course Catalog</a></p>
+    </div>
+</main>
+<%- include('../partials/footer') %>
