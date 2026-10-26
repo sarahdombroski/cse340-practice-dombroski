@@ -5,6 +5,7 @@ import { setupDatabase, testConnection } from './src/models/setup.js';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 import { startSessionCleanup } from './src/utils/session-cleanup.js';
+import flash from './src/middleware/flash.js';
 
 // Import MVC components
 import routes from './src/controllers/routes.js';
@@ -63,6 +64,9 @@ app.use(express.json());
  * Global Middleware
  */
 app.use(addLocalVariables);
+
+// Flash message middleware
+app.use(flash);
 
 /**
  * Routes

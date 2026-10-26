@@ -37,6 +37,9 @@ const processLogin = async (req, res) => {
 
     if (!errors.isEmpty()) {
         console.error('Validation errors:', errors.array());
+        errors.forEach(error => {
+            req.flash('error', error);
+        });
         res.redirect('/login');
         return;
     }
@@ -47,13 +50,13 @@ const processLogin = async (req, res) => {
         // TODO: Find user by email using findUserByEmail()
         const user = await findUserByEmail(email);
         if (!user) {
-          console.log("User not found");
+          req.flash('error', 'Invalid email or password');
           return res.redirect('/login');
         }
 
         const passwordVerified = await verifyPassword(password, user.password);
         if (passwordVerified == false) {
-          console.log("Invalid password");
+          req.flash('error', "Invalid email or password");
           return res.redirect('/login');
         }
 
@@ -65,6 +68,7 @@ const processLogin = async (req, res) => {
     } catch (error) {
         // Model functions do not catch errors, so handle them here
         console.error('Error with processing login', error);
+        req.flash('error', error);
         return res.redirect('/login');
     }
 };

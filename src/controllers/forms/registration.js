@@ -51,6 +51,9 @@ const processRegistration = async (req, res) => {
 
     if (!errors.isEmpty()) {
         console.error('Validation errors:', errors.array());
+        errors.forEach(error => {
+            req.flash('error', error)
+        });
         res.redirect('/register');
         return;
     }
@@ -63,7 +66,7 @@ const processRegistration = async (req, res) => {
         const emailValid = await emailExists(email);
 
         if (emailValid) {
-            console.log('Email already registered');
+            req.flash('warning', 'Email is already registered');
             res.redirect('/register');
             return;
         }
@@ -74,11 +77,12 @@ const processRegistration = async (req, res) => {
         // Save user to database with hashed password
         await saveUser(name, email, hashedPassword);
 
-        console.log('User registered successfully');
-        return res.redirect('/register/list')
+        req.flash('success', 'User registered successfully');
+        return res.redirect('/login')
         // NOTE: Later when we add authentication, we'll change this to require login first
     } catch (error) {
         console.error('Error registering user:', error);
+        req.flash('error', 'Error registering user. Please try again later');
         res.redirect('/register');
     }
 };
@@ -93,7 +97,8 @@ const showAllUsers = async (req, res) => {
     try {
         users = await getAllUsers();
     } catch (error) {
-        console.error('Error retrieving errors:', error);
+        console.error('Error retrieving users:', error);
+        req.flash('error', 'Error retrieving users. Please try again later.');
     }
 
     res.render('forms/registration/list', {
